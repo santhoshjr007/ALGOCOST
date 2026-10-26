@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algorithm Performance &amp; CPU Cost Simulator</title><link rel="stylesheet" href="css/style.css"></head>
+<body><main>
+<h1>Algorithm Performance &amp; CPU Cost Simulator</h1>
+<p class="sub">DAA: Merge Sort &amp; recurrence analysis &nbsp;|&nbsp; COA: CPU performance equation &nbsp;|&nbsp; FLAT: DFA input validation</p>
+
+<section class="card"><h2>1. Configure</h2>
+<div class="grid">
+<label>Input sizes (n) <small>DFA-validated, max 10000</small><input id="sizes" value="100,500,1000,2000,5000" class="valid"></label>
+<label>Input order<select id="kind"><option value="random">Random</option><option value="sorted">Already sorted</option><option value="reversed">Reversed</option></select></label>
+<label>Clock rate <small>DFA-validated: Hz / MHz / GHz</small><input id="clock" value="2.5GHz" class="valid"></label>
+<label>CPI (cycles per instruction)<input id="cpi" type="number" step="0.1" min="0.1" value="1.5"></label>
+<label>Instructions per comparison<input id="ipc" type="number" min="0" value="4"></label>
+<label>Instructions per write<input id="ipw" type="number" min="0" value="3"></label>
+</div>
+<div class="algos"><b>Algorithms:</b>
+<label><input type="checkbox" id="a-merge" checked> Merge Sort</label><label><input type="checkbox" id="a-quick" checked> Quick Sort</label>
+<label><input type="checkbox" id="a-insertion" checked> Insertion Sort</label><label><input type="checkbox" id="a-bubble" checked> Bubble Sort</label></div>
+<button id="run">Run simulation</button><p id="err" class="bad"></p></section>
+
+<section class="card"><h2>2. Results: measured vs theoretical</h2><div class="scroll" id="results"></div><div id="chart"></div></section>
+<section class="card"><h2>3. Merge Sort recurrence (DAA)</h2>
+<p>Worst case: <code>T(n) = T(&lfloor;n/2&rfloor;) + T(&lceil;n/2&rceil;) + n &minus; 1, T(1) = 0</code> &rArr; <b>&Theta;(n log n)</b>. Measured comparisons never exceed T(n).</p><div class="scroll" id="recurrence"></div></section>
+<section class="card"><h2>4. CPU performance equation (COA)</h2>
+<p><code>CPU time = Instruction count &times; CPI &divide; Clock rate</code>. Instruction count is estimated as comparisons &times; instr/compare + writes &times; instr/write.</p></section>
+<section class="card"><h2>5. DFA input validation (FLAT)</h2>
+<p><code>L1 = (digit+ ,)* digit+</code> &nbsp; <code>L2 = digit+ (. digit+)? (Hz|MHz|GHz)</code></p><div id="dfa-out"></div><div class="scroll" id="tables"></div></section>
+</main>
+<script src="js/dfa.js"></script><script src="js/sorting.js"></script><script src="js/cpu.js"></script><script src="js/app.js"></script></body></html>
